@@ -1,81 +1,87 @@
+// controllers/productController.js
 import Product from '../models/productModel';
 import { productSchema } from '../validators/productValidator';
 
-export const create = async (req, res) => {
+export const createProduct = async (req, res) => {
   try {
     const { error } = productSchema.validate(req.body);
     if (error) {
       return res.status(400).json({
-        message: error.details[0].message
+        message: error.details[0].message,
       });
     }
 
-    const product = await Product.create(req.body);
+    const data = await new Product(req.body).save();
     return res.status(201).json({
-      message: 'Product Created',
-      data: Product
+      message: 'Sản phẩm đã được tạo',
+      data: data,
     });
   } catch (err) {
+    console.error(err);
     return res.status(500).json({
-      message: 'Internal Server Error',
-      error: err.message
+      message: 'Lỗi Nội Bộ của Server',
+      error: err.message,
     });
   }
 };
 
-export const getAll = async (req, res) => {
+export const getAllProducts = async (req, res) => {
   try {
-    const products = await Product.find();
-    res.status(200).json({ message: 'Success', data: products });
+    const data = await Product.find();
+    if (!data || data.length === 0) {
+      return res.status(400).json({
+        message: 'Không tìm thấy sản phẩm nào!',
+      });
+    }
+
+    return res.status(200).json({
+      message: 'Lấy danh sách sản phẩm thành công!',
+      data,
+    });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    return res.status(500).json({
+      message: 'Lỗi Nội Bộ của Server',
+      error: error.message,
+    });
   }
 };
 
-export const getOne = async (req, res) => {
+export const getOneProduct = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
     if (!product) {
-      return res.status(404).json({ message: 'Product not found' });
+      return res.status(404).json({ message: 'Không tìm thấy sản phẩm' });
     }
-    res.status(200).json({ message: 'Success', data: product });
+    return res.status(200).json({ message: 'Thành công', data: product });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    return res.status(500).json({ message: 'Lỗi Nội Bộ của Server', error: error.message });
   }
 };
 
-export const update = async (req, res) => {
+export const updateProduct = async (req, res) => {
   try {
-    const updatedProduct = await Product.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
-    if (!updatedProduct) {
-      return res.status(404).json({ message: 'Product not found' });
+    const updated = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!updated) {
+      return res.status(404).json({ message: 'Không tìm thấy sản phẩm' });
     }
-    res.status(200).json({ message: 'Success', data: updatedProduct });
+    return res.status(200).json({ message: 'Thành công', data: updated });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    return res.status(500).json({ message: 'Lỗi Nội Bộ của Server', error: error.message });
   }
 };
 
-export const remove = async (req, res) => {
+export const removeProduct = async (req, res) => {
   try {
-    const deletedProduct = await Product.findByIdAndDelete(req.params.id);
-    if (!deletedProduct) {
-      return res.status(404).json({
-        message: 'Product not found'
-      });
+    const deleted = await Product.findByIdAndDelete(req.params.id);
+    if (!deleted) {
+      return res.status(404).json({ message: 'Không tìm thấy sản phẩm' });
     }
-    res.status(200).json({
-      message: 'Success',
-      data: deletedProduct
-    });
+    return res.status(200).json({ message: 'Thành công', data: deleted });
   } catch (error) {
-    res.status(500).json({
-      error: error.message
-    });
+    console.error(error);
+    return res.status(500).json({ message: 'Lỗi Nội Bộ của Server', error: error.message });
   }
 };
-// Add other CRUD operations as needed

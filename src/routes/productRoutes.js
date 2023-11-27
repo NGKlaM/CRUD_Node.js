@@ -1,15 +1,15 @@
-import express from "express";
+// routes/productRoutes.js
+import express from 'express';
 import {
-    create,getAll, getOne, remove, update,
-} from "../controllers/productController";
-const routerProducts = express.Router();
+  createProduct, getAllProducts, getOneProduct, removeProduct, updateProduct,
+} from '../controllers/productController';
 
-routerProducts.post("/", create);
-routerProducts.get("/", getAll);
-routerProducts.get("/:id", getOne);
-routerProducts.put("/:id", update);
-routerProducts.delete("/:id", remove);
+const router = express.Router();
 
-// Add other CRUD routes as needed
+router.post('/', createProduct);
+router.get('/', getAllProducts);
+router.get('/:id', getOneProduct);
+router.put('/:id', updateProduct);
+router.delete('/:id', removeProduct);
 
-export default routerProducts;
+export default router;
