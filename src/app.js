@@ -15,7 +15,7 @@ const PORT = process.env.PORT;
 // Kết nối MongoDB
 mongoose.connect(process.env.DB_URI, {
   useNewUrlParser: true,
-  // useUnifiedTopology: true,
+  useUnifiedTopology: true,
   // useFindAndModify: false, // Tắt để sử dụng findOneAndUpdate thay thế
 });
 

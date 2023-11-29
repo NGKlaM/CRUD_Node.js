@@ -48,7 +48,7 @@ export const signUp = async (req, res) => {
     });
   }
 };
-
+// const SECRET_CODE = 'your_secret_key';
 export const signIn = async (req, res) => {
   try {
     // Bước 1: Validate dữ liệu người dùng
