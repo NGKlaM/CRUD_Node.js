@@ -14,7 +14,7 @@ export const create = async (req, res) => {
     const categorys = await CategoryModel.create(req.body);
     return res.status(201).json({
       message: 'Product Created',
-      data: CategoryModel
+      data: categorys
     });
   } catch (err) {
     return res.status(500).json({
@@ -61,6 +61,46 @@ export const update = async (req, res) => {
   }
 };
 
+export const getOneBySlug = async (req, res) => {
+  try {
+    const data = await CategoryModel.findOne({ slug: req.params.slug });
+    if (!data) {
+      return res.status(400).json({
+        message: "Lay danh muc that bai!",
+      });
+    }
+    return res.status(200).json({
+      message: "Lay danh muc thanh cong!",
+      data,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      name: error.name,
+      message: error.message,
+    });
+  }
+};
+
+export const getOneByName = async (req, res) => {
+  try {
+    const data = await CategoryModel.findOne({ name: req.params.name });
+    if (!data) {
+      return res.status(400).json({
+        message: "Lay danh muc that bai!",
+      });
+    }
+    return res.status(200).json({
+      message: "Lay danh muc thanh cong!",
+      data,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      name: error.name,
+      message: error.message,
+    });
+  }
+};
+
 export const remove = async (req, res) => {
   try {
     const deleted = await CategoryModel.findByIdAndDelete(req.params.id);
@@ -79,4 +119,5 @@ export const remove = async (req, res) => {
     });
   }
 };
+
 // Add other CRUD operations as needed

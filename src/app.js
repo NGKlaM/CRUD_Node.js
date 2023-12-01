@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import productRoutes from './routes/productRoutes';
 import categoryRoutes from './routes/categoryRotes';
 import authRoutes from './routes/authRoutes';
+import cors from 'cors'
 // import { handleErrors } from './controllers/errorController';
 
 dotenv.config();
@@ -28,7 +29,7 @@ db.once('open', () => {
 
 // Sử dụng bodyParser để đọc dữ liệu từ body của request
 app.use(bodyParser.json());
-
+app.use(cors())
 // Sử dụng các routes đã được định nghĩa
 app.use('/api/products', productRoutes);
 app.use('/api/categories', categoryRoutes);
