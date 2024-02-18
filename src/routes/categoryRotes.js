@@ -2,7 +2,6 @@ import express from "express";
 import 
 {create, getAll, getOne, getOneByName, getOneBySlug, remove, update }
 from "../controllers/categoryController";
-// import { checkIsAdmin } from "../middlewares/checkisAdmin";
 import { checkRequestBodyCategory } from "../middlewares/checkRequestBody";
 
 const routerCategory = express.Router();

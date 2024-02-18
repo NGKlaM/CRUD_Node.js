@@ -1,16 +1,11 @@
 import mongoose from "mongoose";
 const categorySchema = mongoose.Schema(
   {
-    name: {
-      type: String,
-      required: true,
-    },
-    slug: {
-      type: String,
-      required: true,
-    },
+    title: { type: String },
+    description: { type: String },
+    slug: { type: String },
   },
-  { versionKey: false, timestamps: true }
+  { timestamps: true, versionKey: false }
 );
 
 export default mongoose.model("Category", categorySchema);
