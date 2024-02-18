@@ -83,7 +83,7 @@ mongoose.connect("mongodb://localhost:27017").then(()=>{
   console.log("connected to database");
 }).catch((err) => console.log(err));
 
-app.use("/api", router);
+app.use("/.netlify/functions/api", router);
 app.listen(PORT, () => {
   console.log(`Server on port ${PORT}`);
 });
